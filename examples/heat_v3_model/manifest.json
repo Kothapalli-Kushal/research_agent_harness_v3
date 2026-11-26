@@ -1,0 +1,134 @@
+{
+  "pipeline": "v3",
+  "schema_version": 3,
+  "members": [
+    {
+      "kind": "library",
+      "method": "ridge",
+      "params": {
+        "alpha": 1.0
+      },
+      "features": "raw",
+      "scaler": "standard",
+      "pca": 0,
+      "target_transform": "none",
+      "noise_aug": 0,
+      "noise_scale": 1.0
+    }
+  ],
+  "member_info": [
+    {
+      "label": "ridge/raw",
+      "kind": "library",
+      "family": "data-driven",
+      "method_hash": "f3c36457d8ad",
+      "source_hash": null,
+      "uses_forward": false,
+      "fit_diagnostics": {}
+    }
+  ],
+  "weights": [
+    1.0
+  ],
+  "task": "regression",
+  "custom_modules": [],
+  "feature_dim": 40,
+  "target_shape": [
+    2
+  ],
+  "simulator": {
+    "name": "python",
+    "params": {
+      "path": "examples/heat_diffusion_simulator.py",
+      "function": "simulate",
+      "n_segments": 2,
+      "n_grid": 20,
+      "n_steps": 60,
+      "sensors": [
+        3,
+        8,
+        12,
+        17
+      ],
+      "every": 6,
+      "noise": 0.001
+    }
+  },
+  "simulator_copy": "simulator_heat_diffusion_simulator.py",
+  "forward_access_members": [
+    false
+  ],
+  "research_lineage": {
+    "idea-002": {
+      "label": "ridge/raw",
+      "origin": "proposal",
+      "study_id": "S-ridge",
+      "arm_id": "S-ridge.treatment",
+      "gate": "gate-00037",
+      "baseline_identity": false
+    }
+  },
+  "reproducibility": {
+    "seed": 17,
+    "data_seed": 1302,
+    "data_cache_key": "8b070c356b0637da",
+    "spec_hash": "014c7b94fc",
+    "harness_version": "2.0.0",
+    "versions": {
+      "python": "3.12.14",
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "numpy": "2.3.5",
+      "scipy": "1.17.0",
+      "sklearn": "1.8.0",
+      "torch": null
+    },
+    "test_split_sha1": "8b3894cccb05bb40"
+  },
+  "model_sha256": "f5f143bc5126308dcabae94248cadef15a082e5fe03f0940016dc9ac1c205d13",
+  "export_certificate": {
+    "schema_version": 3,
+    "certified": true,
+    "passed": true,
+    "protocol": "pristine-repeat-reload-partition-v1",
+    "atol": 1e-10,
+    "rtol": 1e-08,
+    "checks": {
+      "finite_shape": true,
+      "repeat": true,
+      "reload": true,
+      "partition": true
+    },
+    "reasons": [],
+    "max_abs_differences": {
+      "repeat": 0.0,
+      "reload": 0.0,
+      "partition": 2.220446049250313e-16
+    },
+    "input_role": "development",
+    "n_rows": 80,
+    "output_shape": [
+      80,
+      2
+    ]
+  },
+  "test": {
+    "rel_l2": 0.009948310341105417,
+    "rmse": 0.013482076624736347,
+    "r2": 0.9990300284472723
+  },
+  "shift": {},
+  "test_bootstrap": {
+    "mean": 0.009954206605534411,
+    "std": 0.0006044891901089269,
+    "ci95": [
+      0.008781566197666209,
+      0.011163444377178313
+    ],
+    "n_boot": 100
+  },
+  "test_per_target_rel_l2": [
+    0.00927528454357329,
+    0.010543432412268273
+  ],
+  "final_evaluation_blocked": false
+}
