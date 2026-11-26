@@ -17,6 +17,12 @@ HW = {"cpus": 2, "gpus": [], "accelerator": "cpu", "torch": False, "platform": "
 
 
 class RuntimeTests(unittest.TestCase):
+    def test_explicit_llm_call_cap_is_preserved(self):
+        for limit in (0, 1):
+            with self.subTest(limit=limit):
+                spec = compile_spec({"pipeline": "v3", "budget": {"llm_calls": limit}}, hardware=HW)
+                self.assertEqual(spec.budget["llm_calls"], limit)
+
     def test_offline_study_export_resume_and_rebuild(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

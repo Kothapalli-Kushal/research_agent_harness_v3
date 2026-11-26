@@ -14,7 +14,7 @@ python -m mlharness research --pipeline v3 --spec specs/v3_example.yaml \
   --backend codex --model gpt-6.2-astra --run-dir runs/heat-astra
 ```
 
-Codex uses your ChatGPT plan when signed in with your ChatGPT account. Astra guides the research decisions, and the harness trains candidate estimators on your machine. The example's roles inherit the selected backend and model. For a separate research problem, copy the spec and set its simulator or data source, metrics, study arms, and compute and LLM call limits. [Codex plan usage](https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex)
+Codex uses your ChatGPT plan when signed in with your ChatGPT account. Astra guides the research decisions, and the harness trains candidate estimators on your machine. The example's roles inherit the selected backend and model. To run a separate research problem, copy the spec and configure its simulator or data source, metrics, and study arms. Use `budget.llm_calls` to cap V3 research calls. [Codex plan usage](https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex)
 
 For an offline run, use `--backend none --run-dir runs/heat-offline` in place of the Astra options. The Codex backend logs service errors and falls back to the harness's offline policy within the run. Check `artifacts.jsonl` for the model and outcome of each role call. The example permits one final evaluation per held-out split in the local exposure registry. Resume an interrupted run with the same spec, options, and run directory plus `--resume`.
 

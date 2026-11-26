@@ -214,10 +214,16 @@ def compile_spec(raw: dict, llm=None, hardware: dict | None = None, pipeline: st
         raise ValueError(f"pipeline must be v1, v2 or v3, got {cfg['pipeline']!r}")
     if cfg["pipeline"] in ("v2", "v3"):
         cfg["constraints"] = deep_merge(V2_CONSTRAINT_DEFAULTS, cfg["constraints"])
-        # the research phase has its own LLM budget on top of what execution-time agents may use
         user_llm = (raw.get("budget") or {}).get("llm_calls")
-        need = int(cfg["research"]["llm_calls"]) + 8
-        cfg["budget"]["llm_calls"] = max(int(user_llm or 0), need)
+        if cfg["pipeline"] == "v3" and user_llm is not None:
+            call_limit = int(user_llm)
+            if call_limit < 0:
+                raise ValueError("budget.llm_calls must be nonnegative")
+            cfg["budget"]["llm_calls"] = call_limit
+        else:
+            # Retain the default allowance for research and execution-time calls.
+            need = int(cfg["research"]["llm_calls"]) + 8
+            cfg["budget"]["llm_calls"] = max(int(user_llm or 0), need)
         r = cfg["research"]
         r["min_rounds"] = max(1, min(int(r["min_rounds"]), int(r["max_rounds"])))
         bad = [x for x in r["researchers"] if x not in ("mathematical", "ml", "experimental", "exploratory")]
